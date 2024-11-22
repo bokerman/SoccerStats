@@ -1,0 +1,67 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build Folders
+bin/
+obj/
+out/
+*.log
+
+# ASP.NET Core
+appsettings.*.json
+!appsettings.json
+appsettings.Development.json
+
+# Dependency Folders
+packages/
+node_modules/
+
+# Debug and Release Configurations
+*.pdb
+*.ilk
+*.idb
+*.ipch
+*.tlog
+
+# Log and Cache Files
+*.log
+*.cache
+*.rnd
+
+# Security
+*.snk
+*.pfx
+
+# Transient Files
+*.dbmdl
+*.err
+*.out
+*.publish.xml
+*.pri
+*.prj
+*.tmp
+*.pfx
+*.cer
+
+# Rider IDE
+.idea/
+*.iml
+*.iws
+
+# ReSharper
+_ReSharper.Caches/
+
+# DotNetCore SDK and Test Results
+project.lock.json
+global.json
+*.vspscc
+*.vspcc
+*.vsdx
+test-results/
+
+# macOS Files
+.DS_Store
