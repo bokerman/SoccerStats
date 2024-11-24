@@ -7,4 +7,12 @@
     <RootNamespace>Soccer_Stats</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http.Json" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SoccerStats.Infrastructure\SoccerStats.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

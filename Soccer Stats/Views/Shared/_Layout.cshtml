@@ -17,17 +17,15 @@
         <main>
             @RenderBody()
         </main>
-        <my-custom-component></my-custom-component>
-        <my-other-component></my-other-component>
     </div>
-
     <footer>
         <div>
             <p>Some footer</p>
         </div>
     </footer>
-
     <script type ="module" src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+
 </html>

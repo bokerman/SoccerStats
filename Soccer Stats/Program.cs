@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<IStatsDataService, StatsDataService>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
