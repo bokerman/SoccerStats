@@ -31,7 +31,7 @@
                         }
                     </style>
                     <div class="switcher" role="tablist">
-                        <button role="tab" aria-selected="true" id="recent">Recent Matches</button>
+                        <button role="tab" class="active" aria-selected="true" id="recent">Recent Matches</button>
                         <button role="tab" aria-selected="false" id="upcoming">Upcoming Matches</button>
                     </div>
                 `;
