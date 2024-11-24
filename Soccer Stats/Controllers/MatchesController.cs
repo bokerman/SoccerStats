@@ -9,9 +9,15 @@ public class MatchesController : Controller
         _statsDataService = statsService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Upcoming()
     {
         var matches = await _statsDataService.GetUpcomingMatchesAsync();
+        return Json(matches);
+    }
+
+    public async Task<IActionResult> Recent()
+    {
+        var matches = await _statsDataService.GetRecentMatchesAsync();
         return Json(matches);
     }
 }
