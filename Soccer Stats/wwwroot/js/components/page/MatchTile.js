@@ -6,6 +6,7 @@
 
     connectedCallback() {
         const match = JSON.parse(this.getAttribute('match'));
+
         this.shadowRoot.innerHTML = `
                     <style>
                         :host {
@@ -67,29 +68,29 @@
                     </style>
                     <div class="match-info">
                         <div class="play-icon">▶</div>
-                        <div class="match-time">Tonight | 21:00</div>
+                        <div class="match-time">${new Date(match.gameTime).toLocaleString()}</div>
                         <div class="team-names">
-                            <div>${match.homeTeam}</div>
-                            <div>${match.awayTeam}</div>
+                            <div>${match.homeTeamName}</div>
+                            <div>${match.awayTeamName}</div>
                         </div>
                     </div>
                     <div class="odds-container">
                         <div class="odd-box">
                             <span class="odd-type">1</span>
-                            <span class="odd-value">${match.homeWin}</span>
+                            <span class="odd-value">${match.homeTeamWinOdds}</span>
                         </div>
                         <div class="odd-box">
                             <span class="odd-type">X</span>
-                            <span class="odd-value">${match.draw}</span>
+                            <span class="odd-value">${match.drawOdds}</span>
                         </div>
                         <div class="odd-box">
                             <span class="odd-type">2</span>
-                            <span class="odd-value">${match.awayWin}</span>
+                            <span class="odd-value">${match.awayTeamWinOdds}</span>
                         </div>
                     </div>
                 `;
-        }
     }
+}
 
 
 customElements.define('match-tile', MatchTile);

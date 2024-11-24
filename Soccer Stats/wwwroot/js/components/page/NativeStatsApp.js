@@ -2,7 +2,8 @@
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.matches = [];
+
+        this.leagues = [];
         this.currentMatchType = 'recent';
         this.isLoading = false;
     }
@@ -21,7 +22,7 @@
             if (!response.ok) {
                 throw new Error('Failed to fetch matches');
             }
-            this.matches = await response.json();
+            this.leagues = await response.json();
             this.renderLeagues();
         } catch (error) {
             console.error('Error fetching matches:', error);
@@ -61,6 +62,7 @@
                 `;
 
         const switcher = this.shadowRoot.querySelector('match-switcher');
+
         switcher.addEventListener('switch', (event) => {
             this.currentMatchType = event.detail;
             this.fetchMatches(this.currentMatchType);
@@ -81,14 +83,9 @@
         contentContainer.innerHTML = '<div id="leagues-container"></div>';
         const leaguesContainer = this.shadowRoot.querySelector('#leagues-container');
 
-        const leagues = [...new Set(this.matches.map(match => match.league))];
-
-        leagues.forEach((league, index) => {
-            const leagueMatches = this.matches.filter(match => match.league === league);
+        this.leagues.forEach((league) => {
             const carousel = document.createElement('league-carousel');
-            carousel.setAttribute('league', league);
-            carousel.setAttribute('matches', JSON.stringify(leagueMatches));
-            carousel.setAttribute('first-carousel', index === 0 ? 'true' : 'false');
+            carousel.setAttribute('league', JSON.stringify(league));
             leaguesContainer.appendChild(carousel);
         });
     }

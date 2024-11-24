@@ -6,8 +6,7 @@
     }
 
     connectedCallback() {
-        const league = this.getAttribute('league');
-        const matches = JSON.parse(this.getAttribute('matches'));
+        const league = JSON.parse(this.getAttribute('league'));
 
         this.shadowRoot.innerHTML = `
                     <style>
@@ -74,11 +73,11 @@
                             right: 0.5rem;
                         }
                     </style>
-                    <h3>${league}</h3>
+                    <h3>${league.leagueName}</h3>
                     <div class="carousel-container">
                         <button class="nav-button prev" aria-label="Previous matches">←</button>
                         <div class="carousel">
-                            ${matches.map(match => `<match-tile match='${JSON.stringify(match)}'"></match-tile>`).join('')}
+                            ${league.matches.map(match => `<match-tile match='${JSON.stringify(match)}'></match-tile>`).join('')}
                         </div>
                         <button class="nav-button next" aria-label="Next matches">→</button>
                     </div>
