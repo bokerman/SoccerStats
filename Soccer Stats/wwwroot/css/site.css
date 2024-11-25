@@ -43,10 +43,9 @@ header {
 }
 
 .logo {
-    height: 32px;
+    height: 62px;
     width: auto;
     max-width: 100%;
-    object-fit: contain;
 }
 
 nav ul {
