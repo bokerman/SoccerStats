@@ -44,8 +44,7 @@ header {
 
 .logo {
     height: 62px;
-    width: auto;
-    max-width: 100%;
+    width: 62px;
 }
 
 nav ul {
@@ -90,6 +89,16 @@ main {
     color: white;
 }
 
+.match-tile {
+    contain: layout;
+    min-height: 100px;
+}
+
+.league-carousel {
+    min-height: 100px;
+    overflow: hidden;
+}
+
 footer {
     background-color: var(--secondary-color);
     color: white;
@@ -108,12 +117,61 @@ footer {
     }
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
+.skeleton-text {
+    height: 24px;
+    background: #eee;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    width: 200px;
+}
+
+.skeleton-line {
+    height: 16px;
+    background: #eee;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+.skeleton-odds {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+    .skeleton-odds::before,
+    .skeleton-odds::after {
+        content: '';
+        height: 32px;
+        background: #eee;
+        border-radius: 4px;
+        flex: 1;
+    }
+
+.match-tile-placeholder {
+    background: #f5f5f5;
+    border-radius: 16px;
+    padding: 1rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes shimmer {
+    0 % {
+        background- position: -1000px 0;
     }
 
     100% {
-        transform: rotate(360deg);
+        background - position: 1000px 0;
     }
+}
+
+.skeleton-text,
+.skeleton-line,
+.skeleton-odds::before,
+.skeleton-odds::after {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
 }

@@ -4,33 +4,10 @@
         this.attachShadow({ mode: 'open' });
     }
 
-    formatDateTime(dateTimeString) {
-        const gameDate = new Date(dateTimeString);
-        const now = new Date();
-
-        // Check if the game is today
-        if (gameDate.toDateString() === now.toDateString()) {
-            const currentHour = now.getHours();
-            if (currentHour < 18) {
-                return 'Today';
-            } else {
-                return 'Tonight';
-            }
-        }
-
-        // For games not today, return the formatted date and time
-        return gameDate.toLocaleString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        });
-    }
-
     connectedCallback() {
-        const match = JSON.parse(this.getAttribute('match'));
-
+        let matchData = this.getAttribute('match');
+       const match = JSON.parse(matchData);
+        
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -104,7 +81,27 @@
             </div>
         `;
     }
+
+    formatDateTime(dateTimeString) {
+        const gameDate = new Date(dateTimeString);
+        const now = new Date();
+
+        if (gameDate.toDateString() === now.toDateString()) {
+            const currentHour = now.getHours();
+            if (currentHour < 18) {
+                return 'Today';
+            } else {
+                return 'Tonight';
+            }
+        }
+
+        return gameDate.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    }
 }
-
-
 customElements.define('match-tile', MatchTile);

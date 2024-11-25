@@ -2,10 +2,17 @@
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.league = null;
     }
 
     connectedCallback() {
-        const league = JSON.parse(this.getAttribute('league'));
+        let leagueData = this.getAttribute('league');
+        try {
+            this.league = JSON.parse(leagueData);    
+        }
+        catch (error) {
+            console.log(leagueData);
+        }
 
         this.shadowRoot.innerHTML = `
             <style>
@@ -22,6 +29,7 @@
                 }
                 .carousel-container {
                     position: relative;
+                    overflow: hidden;
                 }
                 .carousel {
                     display: flex;
@@ -36,20 +44,24 @@
                 .carousel::-webkit-scrollbar {
                     display: none;
                 }
-                match-tile {
+                .match-wrapper {
                     flex: 0 0 calc(50% - 1rem);
                     scroll-snap-align: start;
                 }
                 @media (max-width: 768px) {
-                    match-tile {
+                    .match-wrapper {
                         flex: 0 0 calc(100% - 1rem);
                     }
                 }
             </style>
-            <h3>${league.leagueName}</h3>
-            <div class="carousel-container">
+            <h3>${this.league.leagueName}</h3>
+            <div id="carousel-container" class="carousel-container">
                 <div class="carousel">
-                    ${league.matches.map(match => `<match-tile match='${JSON.stringify(match)}'></match-tile>`).join('')}
+                    ${this.league.matches.map(match => `
+                        <div class="match-wrapper">
+                            <match-tile match='${JSON.stringify(match)}'></match-tile>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
         `;
