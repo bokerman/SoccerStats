@@ -25,7 +25,7 @@
                                                 {
                                                     LeagueCode = x.Key.ToString(),
                                                     LeagueName = leagues[x.Key],
-                                                    Matches = x.ToList()
+                                                    Matches = x.OrderBy(y =>y.GameTime).ToList()
                                                 })
                                  .ToList();
     }
