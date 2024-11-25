@@ -70,9 +70,6 @@ app.UseStaticFiles(new StaticFileOptions
     }
 });
 
-// Use together - explicit routing registration not necessary for cases when there is no additional middleware
-// app.UseRouting(); 
-// app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
