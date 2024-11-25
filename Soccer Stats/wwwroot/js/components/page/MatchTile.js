@@ -5,8 +5,21 @@
     }
 
     formatDateTime(dateTimeString) {
-        const date = new Date(dateTimeString);
-        return date.toLocaleString('en-US', {
+        const gameDate = new Date(dateTimeString);
+        const now = new Date();
+
+        // Check if the game is today
+        if (gameDate.toDateString() === now.toDateString()) {
+            const currentHour = now.getHours();
+            if (currentHour < 18) {
+                return 'Today';
+            } else {
+                return 'Tonight';
+            }
+        }
+
+        // For games not today, return the formatted date and time
+        return gameDate.toLocaleString('en-US', {
             month: 'short',
             day: 'numeric',
             hour: '2-digit',
@@ -57,9 +70,10 @@
                     min-width: 60px;
                 }
                 .odd-type {
-                    color: #333;
-                    font-size: 0.8rem;
-                    margin-right: 0.5rem;
+                    color: #8f8686;
+                    font-size: 1.2rem;
+                    margin-right: 1.8rem;
+                    font-weight: 700;
                 }
                 .odd-value {
                     color: #4CAF50;
