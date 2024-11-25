@@ -21,12 +21,22 @@
                                                       })
                                         .ToList();
 
-        return resultbyLeagueDict.Select(x => new LeagueGameCollectionDto()
-                                                {
-                                                    LeagueCode = x.Key.ToString(),
-                                                    LeagueName = leagues[x.Key],
-                                                    Matches = x.OrderBy(y =>y.GameTime).ToList()
-                                                })
-                                 .ToList();
+        Func<int, LeagueGameCollectionDto> selector = leagueId =>
+        {
+            var leagueMatches = resultbyLeagueDict
+                .Where(x => x.Key == leagueId)
+                .Select(x => new LeagueGameCollectionDto
+                {
+                    LeagueCode = x.Key.ToString(),
+                    LeagueName = leagues[x.Key],
+                    Matches = x.OrderBy(y => y.GameTime).ToList()
+                })
+                .FirstOrDefault();
+
+            return leagueMatches;
+        };
+        
+        return leagues.Keys.Select(selector).Where(x => x != null).ToList();
+
     }
 }
