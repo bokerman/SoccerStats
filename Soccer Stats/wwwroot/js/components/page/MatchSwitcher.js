@@ -6,35 +6,47 @@
 
     connectedCallback() {
         this.shadowRoot.innerHTML = `
-                    <style>
-                        :host {
-                            display: block;
-                            margin-bottom: 1rem;
-                        }
-                        .switcher {
-                            display: flex;
-                            background-color: #f0f0f0;
-                            border-radius: 5px;
-                            overflow: hidden;
-                        }
-                        .switcher button {
-                            flex: 1;
-                            padding: 0.5rem 1rem;
-                            border: none;
-                            background-color: transparent;
-                            cursor: pointer;
-                            transition: background-color 0.3s ease;
-                        }
-                        .switcher button.active {
-                            background-color: var(--primary-color);
-                            color: white;
-                        }
-                    </style>
-                    <div class="switcher" role="tablist">
-                        <button role="tab" class="active" aria-selected="true" id="recent">Recent Matches</button>
-                        <button role="tab" aria-selected="false" id="upcoming">Upcoming Matches</button>
-                    </div>
-                `;
+                <style>
+                    :host {
+                        display: block;
+                        margin-bottom: 1rem;
+                    }
+                    .switcher {
+                        display: flex;
+                        background-color: rgba(255, 255, 255, 0.1);
+                        border-radius: 0.8em;
+                        overflow: hidden;
+                        border: 2px solid white;
+                    }
+                    .switcher button {
+                        flex: 1;
+                        padding: 0.75rem 1.5rem;
+                        border: none;
+                        background-color: transparent;
+                        color: white;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+                    .switcher button:first-child {
+                        border-right: 1px solid rgba(255, 255, 255, 0.3);
+                    }
+                    .switcher button:last-child {
+                        border-left: 1px solid rgba(255, 255, 255, 0.3);
+                    }
+                    .switcher button:hover {
+                        background-color: rgba(255, 255, 255, 0.2);
+                    }
+                    .switcher button.active {
+                        background-color: rgba(255, 255, 255, 0.3);
+                    }
+                </style>
+                <div class="switcher" role="tablist">
+                    <button role="tab" class="active" aria-selected="true" id="recent">Recent Matches</button>
+                    <button role="tab" aria-selected="false" id="upcoming">Upcoming Matches</button>
+                </div>
+            `;
 
         this.switcherButtons = this.shadowRoot.querySelectorAll('button');
         this.switcherButtons.forEach(button => {
