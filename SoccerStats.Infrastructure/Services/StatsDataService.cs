@@ -1,18 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using SoccerStats.Infrastructure;
-using System.Diagnostics;
-using System.Drawing;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.X86;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 
 public class StatsDataService : IStatsDataService
 {
     private HttpClient _httpClient;
+    private readonly IMemoryCache _cache;
 
     private Dictionary<int, string> Leagues = new Dictionary<int, string>()
     {
@@ -24,38 +17,47 @@ public class StatsDataService : IStatsDataService
         {2014, "La Liga (Spain)" },
         {2032, "Serie A (Brazil)" }
     };
-    public StatsDataService(HttpClient httpClient, IConfiguration configuration)
+    public StatsDataService(HttpClient httpClient, IConfiguration configuration, IMemoryCache memoryCache)
     {
+        _cache = memoryCache;
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(configuration["FootballDataOrg:Uri"]);
         _httpClient.DefaultRequestHeaders.Add("X-Auth-Token", configuration["FootballDataOrg:ApiKey"]);
     }
 
     // TODO: Fetch on load and cache these results
-    public async Task<List<LeagueGameCollectionDto>> GetUpcomingMatchesAsync()
+    public async Task<List<LeagueGameCollectionDto>> GetUpcomingMatchesAsync(TimeSpan cacheDuration)
     {
+        const string cacheKey = "UpcomingMatches";
+
+        if (_cache.TryGetValue(cacheKey, out List<LeagueGameCollectionDto> cachedMatches))
+            return cachedMatches;
+
         var response = await _httpClient.GetFromJsonAsync<RootObject>(
             string.Concat(
                 "v4/matches?",
                 $"competitions={string.Join(",", Leagues.Keys)}",
-                $"&status=SCHEDULED", 
-                $"&dateTo={DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")}",
-                $"&dateFrom={DateTime.Now.ToString("yyyy-MM-dd")}")
+                $"&status=SCHEDULED",
+                $"&dateTo={DateTime.Now.AddDays(7):yyyy-MM-dd}",
+                $"&dateFrom={DateTime.Now:yyyy-MM-dd}")
             ) ?? new RootObject();
-              
-        return response.MapToDto(Leagues);
+
+        var upcomingMatches = response.MapToDto(Leagues);
+        _cache.Set(cacheKey, upcomingMatches, cacheDuration);
+
+        return upcomingMatches;
     }
 
     public async Task<List<LeagueGameCollectionDto>> GetRecentMatchesAsync()
     {
         var response = await _httpClient.GetFromJsonAsync<RootObject>(
-             string.Concat(
-                "v4/matches?",
-                $"competitions={string.Join(",", Leagues.Keys)}",
-                "&status=FINISHED",
-                $"&dateFrom={DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd")}",
-                $"&dateTo={DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}")
-        ) ?? new RootObject();
+          string.Concat(
+             "v4/matches?",
+             $"competitions={string.Join(",", Leagues.Keys)}",
+             "&status=FINISHED",
+             $"&dateFrom={DateTime.Now.AddDays(-3):yyyy-MM-dd}",
+             $"&dateTo={DateTime.Now.AddDays(1):yyyy-MM-dd}")
+     ) ?? new RootObject();
 
         return response.MapToDto(Leagues);
     }

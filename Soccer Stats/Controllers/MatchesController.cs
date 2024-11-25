@@ -11,7 +11,7 @@ public class MatchesController : Controller
 
     public async Task<IActionResult> Upcoming()
     {
-        var matches = await _statsDataService.GetUpcomingMatchesAsync();
+        var matches = await _statsDataService.GetUpcomingMatchesAsync(TimeSpan.FromMinutes(10));
         return Json(matches);
     }
 
