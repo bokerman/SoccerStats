@@ -4,6 +4,18 @@
         this.attachShadow({ mode: 'open' });
     }
 
+    formatDateTime(dateTimeString) {
+        const date = new Date(dateTimeString);
+        return date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    }
+
     connectedCallback() {
         const match = JSON.parse(this.getAttribute('match'));
 
@@ -17,7 +29,7 @@
                     color: white;
                     position: relative;
                     overflow: hidden;
-                    min-height: 200px;
+                    min-height: 110px;
                 }
                 .match-info {
                     position: relative;
@@ -57,7 +69,7 @@
                 }
             </style>
             <div class="match-info">
-                <div class="match-time">${new Date(match.gameTime).toLocaleString()}</div>
+                <div class="match-time">${this.formatDateTime(match.gameTime)}</div>
                 <div class="team-names">
                     <div>${match.homeTeamName}</div>
                     <div>${match.awayTeamName}</div>
