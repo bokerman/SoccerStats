@@ -54,7 +54,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            min-height: 110px;
+                            min-height: 100px;
                         }
                     </style>
                     <match-switcher></match-switcher>

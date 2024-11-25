@@ -14,7 +14,7 @@
                     margin-bottom: 2rem;
                 }
                 h3 {
-                    margin-bottom: 1rem;
+                    margin-bottom: 0px;
                     color: white;
                     font-size: 1.25rem;
                     font-weight: bold;

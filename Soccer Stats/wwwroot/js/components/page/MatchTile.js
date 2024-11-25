@@ -41,7 +41,7 @@
                     color: white;
                     position: relative;
                     overflow: hidden;
-                    min-height: 110px;
+                    min-height: 100px;
                 }
                 .match-info {
                     position: relative;
@@ -64,7 +64,7 @@
                 .odd-box {
                     background-color: white;
                     border-radius: 8px;
-                    padding: 0.5rem;
+                    padding: 0px 0.5rem 0px 0.5em;
                     display: flex;
                     align-items: center;
                     min-width: 60px;
